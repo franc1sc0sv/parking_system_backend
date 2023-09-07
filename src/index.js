@@ -21,7 +21,11 @@ app.get("/", async (req, res) => {
 
 app.get("/parqueos", async (req, res) => {
   try {
-    const parqueos = await prisma.parqueo.findMany();
+    const parqueos = await prisma.parqueo.findMany({
+      include: {
+        reservas: true,
+      },
+    });
     res.json({ data: parqueos });
   } catch (error) {
     console.error(error);
